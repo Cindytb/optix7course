@@ -19,7 +19,11 @@
 // our own classes, partly shared between host and device
 #include "CUDABuffer.h"
 #include "LaunchParams.h"
+#include "kernels.cuh"
 #include "gdt/math/AffineSpace.h"
+
+#include "Bui/Microphone.h";
+#include "Bui/SoundSource.h";
 
 /*! \namespace osc - Optix Siggraph Course */
 namespace osc {
@@ -42,10 +46,14 @@ namespace osc {
 		
 		//! add aligned cube aith front-lower-left corner and size
 		void addCube(const vec3f &center, const vec3f &size);
-		
+		void addSphere(vec3f center, float radius, int recursionLevel = 4);
+		int getMiddlePoint(int p1, int p2);
 		std::vector<vec3f> vertex;
-		std::vector<vec3i> index;
+		std::vector<vec3f> temp_vertex;
+		std::vector<vec3ui> index;
 		vec3f              color;
+		vec3f			   m_center;
+		vec3f			   m_radius;
 	};
 	
 	/*! a sample OptiX-7 renderer that demonstrates how to set up
@@ -73,6 +81,10 @@ namespace osc {
 
 		/*! set camera to render with */
 		void setCamera(const Camera &camera);
+
+		void auralize();
+		void add_mic(Microphone *mic);
+		void add_source(SoundSource *src);
 	protected:
 		// ------------------------------------------------------------------
 		// internal helper functions
@@ -159,6 +171,9 @@ namespace osc {
 		std::vector<CUDABuffer> indexBuffer;
 		//! buffer that keeps the (final, compacted) accel structure
 		CUDABuffer asBuffer;
+
+		std::vector<Microphone*> m_mics;
+		std::vector<SoundSource*> m_sources;
 	};
 
 } // ::osc

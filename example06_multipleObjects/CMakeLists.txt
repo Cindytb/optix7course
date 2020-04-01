@@ -27,6 +27,12 @@ add_executable(ex06_multipleObjects
   SampleRenderer.h
   SampleRenderer.cpp
   main.cpp
+  Bui/Microphone.h
+  Bui/Microphone.cpp
+  Bui/SoundItem.h
+  Bui/SoundItem.cpp
+  Bui/SoundSource.h
+  Bui/SoundSource.cpp
   )
 
 target_link_libraries(ex06_multipleObjects

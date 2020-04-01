@@ -18,6 +18,7 @@
 
 #include "gdt/math/vec.h"
 #include "optix7.h"
+// #include "Bui/Microphone.h"
 
 namespace osc {
   using namespace gdt;
@@ -26,6 +27,11 @@ namespace osc {
     vec3f  color;
     vec3f *vertex;
     vec3i *index;
+    bool isMic;
+    float absorption;
+    int micID;
+    vec3f pos;
+    vec3f orientation;
   };
   
   struct LaunchParams
@@ -43,6 +49,13 @@ namespace osc {
     } camera;
 
     OptixTraversableHandle traversable;
+
+    float *d_histogram;
+    float *d_transmitted;
+    float3 pos;
+    float3 orientation;
+    int freq_bands, time_bins;
+    float dist_thres, hist_bin_size, energy_thres, c;
   };
 
 } // ::osc
